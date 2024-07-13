@@ -28,35 +28,35 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-@SQLRestriction("is_active = TRUE")
-@SQLDelete(sql = "UPDATE _user SET is_active = FALSE WHERE id = ?")
+@SQLRestriction( "is_active = TRUE" )
+@SQLDelete( sql = "UPDATE _user SET is_active = FALSE WHERE id = ?" )
 @Entity
-@Table(name = "_user")
+@Table( name = "_user" )
 public class User extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
     private Long id;
 
-    @Column(nullable = false)
+    @Column( nullable = false )
     private String firstName;
 
-    @Column(nullable = false)
+    @Column( nullable = false )
     private String lastName;
 
-    @Column(nullable = false)
+    @Column( nullable = false )
     private String username;
 
-    @Column(nullable = false)
+    @Column( nullable = false )
     private String email;
 
-    @Column(nullable = false)
+    @Column( nullable = false )
     private String password;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @ManyToMany( cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH } )
     @JoinTable(
             name = "_user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "roles_id")
+            joinColumns = @JoinColumn( name = "user_id" ),
+            inverseJoinColumns = @JoinColumn( name = "roles_id" )
     )
-    private Set<Role> roles = new LinkedHashSet<>();
+    private Set< Role > roles = new LinkedHashSet<>();
 }
