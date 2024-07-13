@@ -57,7 +57,7 @@ public class UserService implements IUserService {
         UserRequestDto cleanedUserRequestDTOFields = cleanDTOFields( requestDto );
         User foundUser = userRepository
                 .findById( cleanedUserRequestDTOFields.id() )
-                .orElseThrow( () -> new RuntimeException( "User Not Found" ) );
+                .orElseThrow( () -> new RuntimeException( "User Not Found." ) );
         validate( cleanedUserRequestDTOFields, foundUser );
         userRepository.save( toEntityConverter( cleanedUserRequestDTOFields, foundUser ) );
 
@@ -66,6 +66,11 @@ public class UserService implements IUserService {
                 .statusCode( HttpStatus.OK.toString() )
                 .statusMessage( "User Updated Successfully." )
                 .build();
+    }
+
+    @Override
+    public GenericResponseDTO delete( Long id ) {
+        return null;
     }
 
     private UserRequestDto cleanDTOFields( UserRequestDto userRequestDto ) {

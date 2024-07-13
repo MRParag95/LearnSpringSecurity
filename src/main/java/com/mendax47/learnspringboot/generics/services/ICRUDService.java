@@ -10,4 +10,6 @@ public interface ICRUDService< E, RE, RES, CRES > {
     CRES readOne( Long id );
 
     RES update( RE requestDto );
+
+    RES delete( Long id );
 }
