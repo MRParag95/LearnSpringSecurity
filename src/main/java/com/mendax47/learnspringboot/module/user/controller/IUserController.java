@@ -8,5 +8,5 @@ import org.springframework.http.ResponseEntity;
 
 public interface IUserController extends ICRUDController<User, UserRequestDto, GenericResponseDTO> {
     @Override
-    ResponseEntity<GenericResponseDTO> create(UserRequestDto request);
+    ResponseEntity<GenericResponseDTO> create(UserRequestDto requestDto);
 }

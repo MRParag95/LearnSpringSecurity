@@ -1,10 +1,13 @@
 package com.mendax47.learnspringboot.module.role;
 
 import com.mendax47.learnspringboot.module.base.BaseEntity;
+import com.mendax47.learnspringboot.module.role.enums.RoleType;
 import com.mendax47.learnspringboot.module.user.User;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -35,8 +38,9 @@ public class Role extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated( EnumType.STRING )
     @Column(nullable = false)
-    private String name;
+    private RoleType roleType = RoleType.USER;
 
     @ManyToMany(
             mappedBy = "roles",

@@ -10,6 +10,8 @@ import java.io.Serializable;
  */
 
 public record UserRequestDto(
+        Long id,
+
         @NotEmpty(message = "First name can't be null or empty.")
         String firstName,
 
