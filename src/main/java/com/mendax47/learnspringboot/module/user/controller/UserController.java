@@ -7,6 +7,7 @@ import com.mendax47.learnspringboot.module.user.dtos.requests.UserRequestDto;
 import com.mendax47.learnspringboot.module.user.dtos.responses.CustomUserResponseDTO;
 import com.mendax47.learnspringboot.module.user.service.IUserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,9 +28,7 @@ public class UserController implements IUserController {
     @PostMapping( UserRoutes.USER_REGISTRATION )
     @Override
     public ResponseEntity< GenericResponseDTO > create( @Validated UserRequestDto requestDto ) {
-        return ResponseEntity
-                .ok()
-                .body( userService.create( requestDto ) );
+        return new ResponseEntity<>( userService.create( requestDto ), HttpStatus.CREATED );
     }
 
     @GetMapping

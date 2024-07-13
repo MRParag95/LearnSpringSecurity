@@ -36,7 +36,7 @@ public class UserService implements IUserService {
     @Override
     public PageDataResponseDTO readAll( int pageNumber, int pageSize ) {
         Pageable pageable = PageRequest.of( pageNumber - 1, pageSize );
-        Page< User > allUsers = userRepository.findAllUsers( pageable );
+        Page< CustomUserResponseDTO > allUsers = userRepository.findAllUsers( pageable );
 
         return PageDataResponseDTO
                 .builder()

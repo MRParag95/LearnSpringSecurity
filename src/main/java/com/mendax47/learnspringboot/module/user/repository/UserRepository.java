@@ -15,12 +15,7 @@ public interface UserRepository extends JpaRepository< User, Long >, JpaSpecific
 
     @Query( """
                 SELECT
-                    user.id AS id,
-                    user.firstName AS firstName,
-                    user.lastName AS lastName,
-                    user.username AS username,
-                    user.email AS email,
-                    user.roles AS roles
+                    user
                 FROM User user
                 WHERE
                     user.id = :id
@@ -35,7 +30,7 @@ public interface UserRepository extends JpaRepository< User, Long >, JpaSpecific
                 FROM
                     User user
             """ )
-    Page< User > findAllUsers( Pageable pageable );
+    Page< CustomUserResponseDTO > findAllUsers( Pageable pageable );
 
     boolean existsByUsername( String username );
 
