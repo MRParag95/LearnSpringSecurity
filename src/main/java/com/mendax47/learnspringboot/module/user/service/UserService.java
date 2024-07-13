@@ -49,7 +49,7 @@ public class UserService implements IUserService {
 
     @Override
     public CustomUserResponseDTO readOne( Long id ) {
-        CustomUserResponseDTO singleUserById = userRepository.findSingleUserById( id );
+        CustomUserResponseDTO singleUserById = userRepository.findUserById( id );
         if ( singleUserById == null ) {
             throw new RuntimeException( "User with id " + id + " not found." );
         }
@@ -129,6 +129,6 @@ public class UserService implements IUserService {
         return user;
     }
 
-    private void deleteValidator(User user) {
+    private void deleteValidator( User user ) {
     }
 }
