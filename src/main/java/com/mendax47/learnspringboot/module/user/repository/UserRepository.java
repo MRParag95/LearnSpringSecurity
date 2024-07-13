@@ -36,4 +36,8 @@ public interface UserRepository extends JpaRepository< User, Long >, JpaSpecific
                     User user
             """ )
     Page< User > findAllUsers( Pageable pageable );
+
+    boolean existsByUsername( String username );
+
+    boolean existsByEmail( String email );
 }

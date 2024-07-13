@@ -8,4 +8,6 @@ public interface ICRUDService< E, RE, RES, CRES > {
     PageDataResponseDTO readAll( int pageNumber, int pageSize );
 
     CRES readOne( Long id );
+
+    RES update( RE requestDto );
 }

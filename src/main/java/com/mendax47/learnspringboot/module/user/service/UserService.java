@@ -23,7 +23,7 @@ public class UserService implements IUserService {
     @Override
     public GenericResponseDTO create( UserRequestDto requestDto ) {
         UserRequestDto cleanedUserRequestDTOFields = cleanDTOFields( requestDto );
-        validate( cleanedUserRequestDTOFields );
+        validate( cleanedUserRequestDTOFields, null );
         userRepository.save( toEntityConverter( cleanedUserRequestDTOFields, null ) );
 
         return GenericResponseDTO
@@ -52,6 +52,22 @@ public class UserService implements IUserService {
         return userRepository.findSingleUserById( id );
     }
 
+    @Override
+    public GenericResponseDTO update( UserRequestDto requestDto ) {
+        UserRequestDto cleanedUserRequestDTOFields = cleanDTOFields( requestDto );
+        User foundUser = userRepository
+                .findById( cleanedUserRequestDTOFields.id() )
+                .orElseThrow( () -> new RuntimeException( "User Not Found" ) );
+        validate( cleanedUserRequestDTOFields, foundUser );
+        userRepository.save( toEntityConverter( cleanedUserRequestDTOFields, foundUser ) );
+
+        return GenericResponseDTO
+                .builder()
+                .statusCode( HttpStatus.OK.toString() )
+                .statusMessage( "User Updated Successfully." )
+                .build();
+    }
+
     private UserRequestDto cleanDTOFields( UserRequestDto userRequestDto ) {
         return new UserRequestDto(
                 userRequestDto.id(),
@@ -63,11 +79,19 @@ public class UserService implements IUserService {
         );
     }
 
-    private void validate( UserRequestDto requestDto ) {
-        User foundUser = userRepository.findByUsernameOrEmail( requestDto.username(), requestDto.email() );
+    private void validate( UserRequestDto requestDto, User user ) {
+        if ( Objects.isNull( user ) ) {
+            User foundUser = userRepository.findByUsernameOrEmail( requestDto.username(), requestDto.email() );
 
-        if ( foundUser != null ) {
-            throw new RuntimeException( "Email address or Username is already in use." );
+            if ( Objects.nonNull( foundUser ) ) {
+                throw new RuntimeException( "Email address or Username is already in use." );
+            }
+        } else {
+            if ( ( !Objects.equals( requestDto.username(), user.getUsername() ) && userRepository.existsByUsername( requestDto.username() ) )
+                    || ( !Objects.equals( requestDto.email(), user.getEmail() ) && userRepository.existsByEmail( requestDto.email() ) )
+            ) {
+                throw new RuntimeException( "Email address or Username is already in use." );
+            }
         }
     }
 
