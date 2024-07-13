@@ -15,6 +15,12 @@ public class UserController implements IUserController {
     @PostMapping( UserRoutes.USER_REGISTRATION )
     @Override
     public ResponseEntity< GenericResponseDTO > create( @Validated UserRequestDto request ) {
-        return null;
+        return ResponseEntity
+                .ok()
+                .body(
+                        GenericResponseDTO
+                                .builder()
+                                .build()
+                );
     }
 }
