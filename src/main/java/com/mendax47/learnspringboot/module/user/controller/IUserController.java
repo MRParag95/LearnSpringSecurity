@@ -4,9 +4,7 @@ import com.mendax47.learnspringboot.generics.controllers.ICRUDController;
 import com.mendax47.learnspringboot.generics.dtos.responses.GenericResponseDTO;
 import com.mendax47.learnspringboot.module.user.User;
 import com.mendax47.learnspringboot.module.user.dtos.requests.UserRequestDto;
-import org.springframework.http.ResponseEntity;
+import com.mendax47.learnspringboot.module.user.dtos.responses.CustomUserResponseDTO;
 
-public interface IUserController extends ICRUDController<User, UserRequestDto, GenericResponseDTO> {
-    @Override
-    ResponseEntity<GenericResponseDTO> create(UserRequestDto requestDto);
+public interface IUserController extends ICRUDController<User, UserRequestDto, GenericResponseDTO, CustomUserResponseDTO > {
 }
