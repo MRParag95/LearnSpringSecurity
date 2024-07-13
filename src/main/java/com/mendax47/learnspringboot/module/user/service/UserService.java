@@ -4,7 +4,7 @@ import com.mendax47.learnspringboot.generics.dtos.responses.GenericResponseDTO;
 import com.mendax47.learnspringboot.generics.dtos.responses.PageDataResponseDTO;
 import com.mendax47.learnspringboot.module.user.User;
 import com.mendax47.learnspringboot.module.user.dtos.requests.UserRequestDto;
-import com.mendax47.learnspringboot.module.user.dtos.responses.SingleUserResponseDTO;
+import com.mendax47.learnspringboot.module.user.dtos.responses.CustomUserResponseDTO;
 import com.mendax47.learnspringboot.module.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -34,9 +34,9 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public PageDataResponseDTO readAll(int pageNumber, int pageSize) {
+    public PageDataResponseDTO readAll( int pageNumber, int pageSize ) {
         Pageable pageable = PageRequest.of( pageNumber - 1, pageSize );
-        Page<User> allUsers = userRepository.findAllUsers( pageable );
+        Page< User > allUsers = userRepository.findAllUsers( pageable );
 
         return PageDataResponseDTO
                 .builder()
@@ -48,7 +48,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public SingleUserResponseDTO readOne( Long id ) {
+    public CustomUserResponseDTO readOne( Long id ) {
         return userRepository.findSingleUserById( id );
     }
 

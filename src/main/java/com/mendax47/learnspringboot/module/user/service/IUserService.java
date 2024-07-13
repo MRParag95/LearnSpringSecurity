@@ -5,9 +5,9 @@ import com.mendax47.learnspringboot.generics.dtos.responses.PageDataResponseDTO;
 import com.mendax47.learnspringboot.generics.services.ICRUDService;
 import com.mendax47.learnspringboot.module.user.User;
 import com.mendax47.learnspringboot.module.user.dtos.requests.UserRequestDto;
-import com.mendax47.learnspringboot.module.user.dtos.responses.SingleUserResponseDTO;
+import com.mendax47.learnspringboot.module.user.dtos.responses.CustomUserResponseDTO;
 
-public interface IUserService extends ICRUDService< User, UserRequestDto, GenericResponseDTO, SingleUserResponseDTO > {
+public interface IUserService extends ICRUDService< User, UserRequestDto, GenericResponseDTO, CustomUserResponseDTO > {
     @Override
     GenericResponseDTO create( UserRequestDto requestDto );
 
@@ -15,5 +15,5 @@ public interface IUserService extends ICRUDService< User, UserRequestDto, Generi
     PageDataResponseDTO readAll(int pageNumber, int pageSize);
 
     @Override
-    SingleUserResponseDTO readOne( Long id );
+    CustomUserResponseDTO readOne( Long id );
 }

@@ -8,7 +8,7 @@ import java.util.Set;
  * Projection for {@link com.mendax47.learnspringboot.module.user.User}
  */
 
-public interface SingleUserResponseDTO {
+public interface CustomUserResponseDTO {
     Long getId();
 
     String getFirstName();

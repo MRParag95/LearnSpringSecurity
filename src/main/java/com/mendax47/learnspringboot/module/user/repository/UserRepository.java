@@ -2,7 +2,7 @@ package com.mendax47.learnspringboot.module.user.repository;
 
 import com.mendax47.learnspringboot.module.user.User;
 
-import com.mendax47.learnspringboot.module.user.dtos.responses.SingleUserResponseDTO;
+import com.mendax47.learnspringboot.module.user.dtos.responses.CustomUserResponseDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -25,7 +25,7 @@ public interface UserRepository extends JpaRepository< User, Long >, JpaSpecific
                 WHERE
                     user.id = :id
             """ )
-    SingleUserResponseDTO findSingleUserById(
+    CustomUserResponseDTO findSingleUserById(
             @Param( "id" ) Long id
     );
 
