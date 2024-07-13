@@ -49,7 +49,11 @@ public class UserService implements IUserService {
 
     @Override
     public CustomUserResponseDTO readOne( Long id ) {
-        return userRepository.findSingleUserById( id );
+        CustomUserResponseDTO singleUserById = userRepository.findSingleUserById( id );
+        if ( singleUserById == null ) {
+            throw new RuntimeException( "User with id " + id + " not found." );
+        }
+        return singleUserById;
     }
 
     @Override
@@ -70,7 +74,17 @@ public class UserService implements IUserService {
 
     @Override
     public GenericResponseDTO delete( Long id ) {
-        return null;
+        User foundUser = userRepository
+                .findById( id )
+                .orElseThrow( () -> new RuntimeException( "User Not Found." ) );
+        deleteValidator( foundUser );
+        userRepository.delete( foundUser );
+
+        return GenericResponseDTO
+                .builder()
+                .statusCode( HttpStatus.OK.toString() )
+                .statusMessage( "User Deleted Successfully." )
+                .build();
     }
 
     private UserRequestDto cleanDTOFields( UserRequestDto userRequestDto ) {
@@ -113,5 +127,8 @@ public class UserService implements IUserService {
         user.setPassword( requestDto.password() );
 
         return user;
+    }
+
+    private void deleteValidator(User user) {
     }
 }
