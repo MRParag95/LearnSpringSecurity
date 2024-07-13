@@ -18,9 +18,10 @@ public class UserService implements IUserService {
         UserRequestDto cleanedUserRequestDTOFields = cleanDTOFields( requestDto );
         validate( cleanedUserRequestDTOFields );
         userRepository.save( toEntityConverter( cleanedUserRequestDTOFields, null ) );
+
         return GenericResponseDTO
                 .builder()
-                .statusMessage( HttpStatus.CREATED.toString() )
+                .statusCode( HttpStatus.CREATED.toString() )
                 .statusMessage( "User Created Successfully." )
                 .build();
     }
