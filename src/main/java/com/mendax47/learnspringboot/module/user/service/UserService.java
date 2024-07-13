@@ -4,6 +4,7 @@ import com.mendax47.learnspringboot.generics.dtos.responses.GenericResponseDTO;
 import com.mendax47.learnspringboot.generics.dtos.responses.PageDataResponseDTO;
 import com.mendax47.learnspringboot.module.user.User;
 import com.mendax47.learnspringboot.module.user.dtos.requests.UserRequestDto;
+import com.mendax47.learnspringboot.module.user.dtos.responses.SingleUserResponseDTO;
 import com.mendax47.learnspringboot.module.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -11,6 +12,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -44,6 +47,11 @@ public class UserService implements IUserService {
                 .build();
     }
 
+    @Override
+    public SingleUserResponseDTO readOne( Long id ) {
+        return userRepository.findSingleUserById( id );
+    }
+
     private UserRequestDto cleanDTOFields( UserRequestDto userRequestDto ) {
         return new UserRequestDto(
                 userRequestDto.id(),
@@ -64,7 +72,7 @@ public class UserService implements IUserService {
     }
 
     private User toEntityConverter( UserRequestDto requestDto, User user ) {
-        if ( user == null ) {
+        if ( Objects.isNull( user ) ) {
             user = new User();
         }
 
