@@ -1,10 +1,14 @@
 package com.mendax47.learnspringboot.module.user.service;
 
 import com.mendax47.learnspringboot.generics.dtos.responses.GenericResponseDTO;
+import com.mendax47.learnspringboot.generics.dtos.responses.PageDataResponseDTO;
 import com.mendax47.learnspringboot.module.user.User;
 import com.mendax47.learnspringboot.module.user.dtos.requests.UserRequestDto;
 import com.mendax47.learnspringboot.module.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +27,20 @@ public class UserService implements IUserService {
                 .builder()
                 .statusCode( HttpStatus.CREATED.toString() )
                 .statusMessage( "User Created Successfully." )
+                .build();
+    }
+
+    @Override
+    public PageDataResponseDTO readAll(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of( pageNumber - 1, pageSize );
+        Page<User> allUsers = userRepository.findAllUsers( pageable );
+
+        return PageDataResponseDTO
+                .builder()
+                .model( allUsers.getContent() )
+                .totalElements( allUsers.getTotalElements() )
+                .totalPages( allUsers.getTotalPages() )
+                .currentPage( allUsers.getNumber() + 1 )
                 .build();
     }
 
