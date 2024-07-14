@@ -7,6 +7,9 @@ import com.mendax47.learnspringboot.module.role.dtos.requests.RoleRequestDTO;
 import com.mendax47.learnspringboot.module.role.dtos.responses.CustomRoleResponseDTO;
 import com.mendax47.learnspringboot.module.role.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -33,16 +36,30 @@ public class RoleService implements IRoleService {
 
     @Override
     public PageDataResponseDTO readAll( int pageNumber, int pageSize ) {
-        return null;
+        Pageable pageable = PageRequest.of( pageNumber - 1, pageSize );
+        Page< CustomRoleResponseDTO > roles = roleRepository.findAllRoles( pageable );
+
+        return PageDataResponseDTO
+                .builder()
+                .model( roles.getContent() )
+                .totalElements( roles.getTotalElements() )
+                .totalPages( roles.getTotalPages() )
+                .currentPage( roles.getNumber() + 1 )
+                .build();
     }
 
     @Override
     public CustomRoleResponseDTO readOne( Long id ) {
-        return null;
+        CustomRoleResponseDTO singleRoleById = roleRepository.findRoleById( id );
+        if ( Objects.isNull( singleRoleById ) ) {
+            throw new RuntimeException( "Role with id " + id + " not found." );
+        }
+        return singleRoleById;
     }
 
     @Override
     public GenericResponseDTO update( RoleRequestDTO requestDto ) {
+        RoleRequestDTO cleanedRoleRequestDTOFields = cleanDTOFields( requestDto );
         return null;
     }
 

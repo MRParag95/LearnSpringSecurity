@@ -50,7 +50,7 @@ public class UserService implements IUserService {
     @Override
     public CustomUserResponseDTO readOne( Long id ) {
         CustomUserResponseDTO singleUserById = userRepository.findUserById( id );
-        if ( singleUserById == null ) {
+        if ( Objects.isNull( singleUserById ) ) {
             throw new RuntimeException( "User with id " + id + " not found." );
         }
         return singleUserById;
