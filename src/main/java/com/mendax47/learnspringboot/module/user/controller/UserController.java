@@ -3,7 +3,7 @@ package com.mendax47.learnspringboot.module.user.controller;
 import com.mendax47.learnspringboot.constants.routers.UserRoutes;
 import com.mendax47.learnspringboot.generics.dtos.responses.GenericResponseDTO;
 import com.mendax47.learnspringboot.generics.dtos.responses.PageDataResponseDTO;
-import com.mendax47.learnspringboot.module.user.dtos.requests.UserRequestDto;
+import com.mendax47.learnspringboot.module.user.dtos.requests.UserRequestDTO;
 import com.mendax47.learnspringboot.module.user.dtos.responses.CustomUserResponseDTO;
 import com.mendax47.learnspringboot.module.user.service.IUserService;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class UserController implements IUserController {
 
     @PostMapping( UserRoutes.USER_REGISTRATION )
     @Override
-    public ResponseEntity< GenericResponseDTO > create( @Validated UserRequestDto requestDto ) {
+    public ResponseEntity< GenericResponseDTO > create( @Validated UserRequestDTO requestDto ) {
         return new ResponseEntity<>( userService.create( requestDto ), HttpStatus.CREATED );
     }
 
@@ -50,7 +50,7 @@ public class UserController implements IUserController {
 
     @PutMapping
     @Override
-    public ResponseEntity< GenericResponseDTO > update( @Validated UserRequestDto requestDto ) {
+    public ResponseEntity< GenericResponseDTO > update( @Validated UserRequestDTO requestDto ) {
         return ResponseEntity
                 .ok()
                 .body( userService.update( requestDto ) );

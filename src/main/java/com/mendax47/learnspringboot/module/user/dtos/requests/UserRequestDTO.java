@@ -9,7 +9,7 @@ import java.io.Serializable;
  * DTO for {@link com.mendax47.learnspringboot.module.user.User}
  */
 
-public record UserRequestDto(
+public record UserRequestDTO(
         Long id,
 
         @NotEmpty(message = "First name can't be null or empty.")
