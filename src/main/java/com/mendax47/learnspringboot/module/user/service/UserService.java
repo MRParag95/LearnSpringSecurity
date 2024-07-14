@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -19,6 +20,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class UserService implements IUserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public GenericResponseDTO create( UserRequestDTO requestDto ) {
@@ -94,7 +96,7 @@ public class UserService implements IUserService {
                 requestDto.lastName().strip(),
                 requestDto.username().strip(),
                 requestDto.email().strip(),
-                requestDto.password().strip()
+                passwordEncoder.encode( requestDto.password().strip() )
         );
     }
 
