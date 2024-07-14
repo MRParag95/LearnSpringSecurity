@@ -31,7 +31,7 @@ import java.util.Set;
 @NoArgsConstructor
 @SuperBuilder
 @SQLRestriction( "is_active = TRUE" )
-@SQLDelete( sql = "UPDATE _user SET is_active = FALSE WHERE id = ?" )
+@SQLDelete( sql = "UPDATE role SET is_active = FALSE WHERE id = ?" )
 @Entity
 public class Role extends BaseEntity {
     @Id
