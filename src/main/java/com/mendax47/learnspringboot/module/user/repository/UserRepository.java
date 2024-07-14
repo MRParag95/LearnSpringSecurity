@@ -13,8 +13,9 @@ import org.springframework.data.jpa.repository.Query;
 public interface UserRepository extends JpaRepository< User, Long >, JpaSpecificationExecutor< User > {
     User findByUsernameOrEmail( String username, String email );
 
-    @EntityGraph( attributePaths = { "roles" } )
-    CustomUserResponseDTO findUserById( Long id );
+    boolean existsByUsername( String username );
+
+    boolean existsByEmail( String email );
 
     @EntityGraph( attributePaths = { "roles" } )
     @Query( """
@@ -25,7 +26,6 @@ public interface UserRepository extends JpaRepository< User, Long >, JpaSpecific
             """ )
     Page< CustomUserResponseDTO > findAllUsers( Pageable pageable );
 
-    boolean existsByUsername( String username );
-
-    boolean existsByEmail( String email );
+    @EntityGraph( attributePaths = { "roles" } )
+    CustomUserResponseDTO findUserById( Long id );
 }

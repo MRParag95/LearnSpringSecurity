@@ -87,14 +87,14 @@ public class UserService implements IUserService {
                 .build();
     }
 
-    private UserRequestDTO cleanDTOFields( UserRequestDTO userRequestDto ) {
+    private UserRequestDTO cleanDTOFields( UserRequestDTO requestDto ) {
         return new UserRequestDTO(
-                userRequestDto.id(),
-                userRequestDto.firstName().strip(),
-                userRequestDto.lastName().strip(),
-                userRequestDto.username().strip(),
-                userRequestDto.email().strip(),
-                userRequestDto.password().strip()
+                requestDto.id(),
+                requestDto.firstName().strip(),
+                requestDto.lastName().strip(),
+                requestDto.username().strip(),
+                requestDto.email().strip(),
+                requestDto.password().strip()
         );
     }
 
