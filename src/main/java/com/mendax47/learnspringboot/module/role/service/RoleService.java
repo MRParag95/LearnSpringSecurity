@@ -60,12 +60,32 @@ public class RoleService implements IRoleService {
     @Override
     public GenericResponseDTO update( RoleRequestDTO requestDto ) {
         RoleRequestDTO cleanedRoleRequestDTOFields = cleanDTOFields( requestDto );
-        return null;
+        Role foundRole = roleRepository
+                .findById( requestDto.id() )
+                .orElseThrow(() -> new RuntimeException( "Role with id " + requestDto.id() + " not found." ) );
+        validate( cleanedRoleRequestDTOFields, foundRole );
+        roleRepository.save( toEntityConverter( cleanedRoleRequestDTOFields, foundRole ) );
+
+        return GenericResponseDTO
+                .builder()
+                .statusCode( HttpStatus.OK.toString() )
+                .statusMessage( "Role Updated Successfully." )
+                .build();
     }
 
     @Override
     public GenericResponseDTO delete( Long id ) {
-        return null;
+        Role foundRole = roleRepository
+                .findById( id )
+                .orElseThrow(() -> new RuntimeException( "Role with id " + id + " not found." ) );
+        deleteValidator( foundRole );
+        roleRepository.delete( foundRole );
+
+        return GenericResponseDTO
+                .builder()
+                .statusCode( HttpStatus.OK.toString() )
+                .statusMessage( "Role Deleted Successfully." )
+                .build();
     }
 
     private RoleRequestDTO cleanDTOFields( RoleRequestDTO requestDto ) {

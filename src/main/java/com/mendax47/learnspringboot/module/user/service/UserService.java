@@ -61,7 +61,7 @@ public class UserService implements IUserService {
         UserRequestDTO cleanedUserRequestDTOFields = cleanDTOFields( requestDto );
         User foundUser = userRepository
                 .findById( cleanedUserRequestDTOFields.id() )
-                .orElseThrow( () -> new RuntimeException( "User Not Found." ) );
+                .orElseThrow( () -> new RuntimeException( "User with id " + requestDto.id() + " not found." ) );
         validate( cleanedUserRequestDTOFields, foundUser );
         userRepository.save( toEntityConverter( cleanedUserRequestDTOFields, foundUser ) );
 
