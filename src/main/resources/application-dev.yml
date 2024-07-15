@@ -15,5 +15,6 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 logging:
   level:
-    org.springframework.web: debug
-    org.hibernate.sql: debug
+    org.springframework.web: error
+    org.springframework.security: error
+    org.hibernate.sql: error
