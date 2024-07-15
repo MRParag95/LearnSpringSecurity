@@ -5,6 +5,7 @@ import com.mendax47.learnspringboot.module.role.Role;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -52,7 +53,10 @@ public class User extends BaseEntity {
     @Column( nullable = false )
     private String password;
 
-    @ManyToMany( cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH } )
+    @ManyToMany(
+            cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH },
+            fetch = FetchType.EAGER 
+    )
     @JoinTable(
             name = "_user_roles",
             joinColumns = @JoinColumn( name = "user_id" ),
