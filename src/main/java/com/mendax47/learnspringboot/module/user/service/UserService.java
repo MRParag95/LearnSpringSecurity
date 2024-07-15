@@ -2,8 +2,11 @@ package com.mendax47.learnspringboot.module.user.service;
 
 import com.mendax47.learnspringboot.generics.dtos.responses.GenericResponseDTO;
 import com.mendax47.learnspringboot.generics.dtos.responses.PageDataResponseDTO;
+import com.mendax47.learnspringboot.module.role.Role;
+import com.mendax47.learnspringboot.module.role.repository.RoleRepository;
 import com.mendax47.learnspringboot.module.user.User;
 import com.mendax47.learnspringboot.module.user.dtos.requests.UserRequestDTO;
+import com.mendax47.learnspringboot.module.user.dtos.requests.UserRolesRequestDTO;
 import com.mendax47.learnspringboot.module.user.dtos.responses.CustomUserResponseDTO;
 import com.mendax47.learnspringboot.module.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,12 +18,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class UserService implements IUserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
 
     @Override
     public GenericResponseDTO create( UserRequestDTO requestDto ) {
@@ -86,6 +91,26 @@ public class UserService implements IUserService {
                 .builder()
                 .statusCode( HttpStatus.OK.toString() )
                 .statusMessage( "User Deleted Successfully." )
+                .build();
+    }
+
+    @Override
+    public GenericResponseDTO setUserRoles( UserRolesRequestDTO requestDTO ) {
+        User foundUser = userRepository.findUserByUserId( requestDTO.userId() );
+
+        if ( Objects.isNull( foundUser ) ) {
+            throw new RuntimeException( "User with id " + requestDTO.userId() + " not found." );
+        }
+
+        Set< Role > foundRoles = roleRepository.findAllByIdIn( requestDTO.roleIds() );
+        foundUser.getRoles().addAll( foundRoles );
+
+        userRepository.save( foundUser );
+
+        return GenericResponseDTO
+                .builder()
+                .statusCode( HttpStatus.OK.toString() )
+                .statusMessage( "User's Role Updated Successfully." )
                 .build();
     }
 

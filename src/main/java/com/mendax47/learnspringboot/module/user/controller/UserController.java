@@ -4,6 +4,7 @@ import com.mendax47.learnspringboot.constants.routers.UserRoutes;
 import com.mendax47.learnspringboot.generics.dtos.responses.GenericResponseDTO;
 import com.mendax47.learnspringboot.generics.dtos.responses.PageDataResponseDTO;
 import com.mendax47.learnspringboot.module.user.dtos.requests.UserRequestDTO;
+import com.mendax47.learnspringboot.module.user.dtos.requests.UserRolesRequestDTO;
 import com.mendax47.learnspringboot.module.user.dtos.responses.CustomUserResponseDTO;
 import com.mendax47.learnspringboot.module.user.service.IUserService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -62,5 +64,13 @@ public class UserController implements IUserController {
         return ResponseEntity
                 .ok()
                 .body( userService.delete( id ) );
+    }
+
+    @PostMapping("change-roles")
+    @Override
+    public ResponseEntity< GenericResponseDTO > setUserRoles( @RequestBody UserRolesRequestDTO requestDTO ) {
+        return ResponseEntity
+                .ok()
+                .body( userService.setUserRoles( requestDTO ) );
     }
 }

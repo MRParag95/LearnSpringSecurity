@@ -24,7 +24,7 @@ public class ProjectSecurityConfig {
                             .requestMatchers( PermittedRoutes.ROUTES )
                             .permitAll()
                             .anyRequest()
-                            .authenticated();
+                            .permitAll();
                 } )
                 .formLogin( Customizer.withDefaults() )
                 .httpBasic( Customizer.withDefaults() );
