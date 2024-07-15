@@ -96,7 +96,7 @@ public class UserService implements IUserService {
                 requestDto.lastName().strip(),
                 requestDto.username().strip(),
                 requestDto.email().strip(),
-                passwordEncoder.encode( requestDto.password().strip() )
+                passwordEncoder.encode( requestDto.password() )
         );
     }
 
