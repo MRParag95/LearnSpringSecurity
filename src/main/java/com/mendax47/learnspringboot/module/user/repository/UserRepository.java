@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
 public interface UserRepository extends JpaRepository< User, Long >, JpaSpecificationExecutor< User > {
+    @EntityGraph( attributePaths = { "roles" } )
     User findByUsernameOrEmail( String username, String email );
 
     boolean existsByUsername( String username );
